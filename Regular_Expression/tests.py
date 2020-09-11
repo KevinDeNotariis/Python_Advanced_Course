@@ -55,6 +55,18 @@ Common symptoms include fever, cough, fatigue, shortness of breath or breathing 
         match = re.sub(r'(?<=\. )T\w+', 'Yeah', self.bigText)
         self.assertEqual(len(re.findall('Yeah', match)), 5)
 
+    def test_countAllDifferentWords(self):
+        #Extract all words and numbers which are separated by '-' or inside '[ ]' and case insensitive
+        match = re.findall(r'[0-9]{1,3}\,*\.*[0-9]{0,3}\b|\w+', self.bigText, re.IGNORECASE)
+        mapOfMatches = {}
+        for elem in match:
+            try:
+                mapOfMatches[str.lower(elem)]+=1
+            except:
+                mapOfMatches[str.lower(elem)] = 1
+                
+        self.assertEqual(len(mapOfMatches), 179)
+        
 
 
 if __name__ == '__main__':
